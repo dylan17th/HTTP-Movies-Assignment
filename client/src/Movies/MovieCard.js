@@ -1,7 +1,12 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+
 
 const MovieCard = props => {
-  const { title, director, metascore, stars } = props.movie;
+  const { title, director, metascore, stars,id} = props.movie;
+  // const { id } = useParams();
+  
+
   return (
     <div className="movie-card">
       <h2>{title}</h2>
@@ -18,6 +23,8 @@ const MovieCard = props => {
           {star}
         </div>
       ))}
+      <button onClick={() => props.editHandler(id)}>Edit movie</button>
+      <button onClick={props.deleteHandler}>Delete movie</button>
     </div>
   );
 };

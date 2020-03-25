@@ -4,10 +4,13 @@ import SavedList from "./Movies/SavedList";
 import MovieList from "./Movies/MovieList";
 import Movie from "./Movies/Movie";
 import axios from 'axios';
+import EditMovie from './Movies/EditMovie';
+import { useHistory } from 'react-router-dom';
 
 const App = () => {
   const [savedList, setSavedList] = useState([]);
   const [movieList, setMovieList] = useState([]);
+  const history = useHistory();
 
   const getMovieList = () => {
     axios
@@ -24,6 +27,15 @@ const App = () => {
     getMovieList();
   }, []);
 
+  const editHandler = id => {
+    history.push(`edit-movie/${id}`)
+  }
+
+  const deleteHandler = e => {
+    e.preventDefault();
+    console.log('delete button working')
+  }
+
   return (
     <>
       <SavedList list={savedList} />
@@ -32,8 +44,11 @@ const App = () => {
         <MovieList movies={movieList} />
       </Route>
 
-      <Route path="/movies/:id">
-        <Movie addToSavedList={addToSavedList} />
+      <Route exact path="/movies/:id">
+        <Movie addToSavedList={addToSavedList} editHandler={editHandler} deleteHandler={deleteHandler} />
+      </Route>
+      <Route path="/movies/edit-movie/:id">
+        <EditMovie movie={movieList} />
       </Route>
     </>
   );
