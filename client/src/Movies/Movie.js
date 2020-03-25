@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useRouteMatch } from 'react-router-dom';
+import { useRouteMatch, useParams } from 'react-router-dom';
 import MovieCard from './MovieCard';
 
 function Movie({ addToSavedList, editHandler, deleteHandler }) {
   const [movie, setMovie] = useState(null);
   const match = useRouteMatch();
-
+  const { id } =useParams()
 
   const fetchMovie = id => {
     axios
@@ -14,7 +14,7 @@ function Movie({ addToSavedList, editHandler, deleteHandler }) {
       .then(res => setMovie(res.data))
       .catch(err => console.log(err.response));
   };
-
+console.log('movie from the movie component', movie)
   const saveMovie = () => {
     addToSavedList(movie);
   };
@@ -34,6 +34,8 @@ function Movie({ addToSavedList, editHandler, deleteHandler }) {
       <div className='save-button' onClick={saveMovie}>
         Save
       </div>
+      <button onClick={() => editHandler(id)}>Edit movie</button>
+      <button onClick={deleteHandler}>Delete movie</button>
     </div>
   );
 }
