@@ -14,7 +14,7 @@ function Movie({ addToSavedList, editHandler, deleteHandler }) {
       .then(res => setMovie(res.data))
       .catch(err => console.log(err.response));
   };
-console.log('movie from the movie component', movie)
+
   const saveMovie = () => {
     addToSavedList(movie);
   };
@@ -35,7 +35,7 @@ console.log('movie from the movie component', movie)
         Save
       </div>
       <button onClick={() => editHandler(id)}>Edit movie</button>
-      <button onClick={deleteHandler}>Delete movie</button>
+      <button onClick={() => deleteHandler(id)}>Delete movie</button>
     </div>
   );
 }

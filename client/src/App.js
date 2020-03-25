@@ -6,9 +6,8 @@ import Movie from "./Movies/Movie";
 import axios from 'axios';
 import EditMovie from './Movies/EditMovie';
 
-
-
 const App = () => {
+
   const [savedList, setSavedList] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const history = useHistory();
@@ -33,26 +32,29 @@ const App = () => {
     history.push(`edit-movie/${id}`)
   }
 
-  const deleteHandler = e => {
-    e.preventDefault();
+  const deleteHandler = id => {
     axios.delete(`http://localhost:5000/api/movies/${id}`)
     .then(res => {
       console.log(res)
+      const newArray = movieList.filter( movie => {
+        if( movie.id !== res.data){
+          return movie
+        }else {
+          return null
+        }
+      })
+      setMovieList(newArray)
       history.push('/');
     })
     .catch(err => console.log(err))
-    
   }
-  console.log(movieList)
 
   return (
     <>
       <SavedList list={savedList} />
-
       <Route exact path="/">
         <MovieList movies={movieList} />
       </Route>
-
       <Route exact path="/movies/:id">
         <Movie addToSavedList={addToSavedList} editHandler={editHandler} deleteHandler={deleteHandler} />
       </Route>

@@ -3,9 +3,8 @@ import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios'
 
 const EditMovie = props => {
-    console.log(props)
-    const history = useHistory();
 
+    const history = useHistory();
 
     const { id } = useParams();
     const [input, setInput ] = useState({
@@ -16,11 +15,9 @@ const EditMovie = props => {
 
     useEffect(()=> {
         const updateThisMovie = props.movie.find( movie => `${movie.id}` === id ) 
-
         if(updateThisMovie){
             setInput(updateThisMovie)
         }
-
     },[id])
 
     const handlePostRequest = e => {
@@ -62,10 +59,6 @@ const EditMovie = props => {
                     <label htmlFor='metascore'></label>
                     <input name='metascore' id='metascore' value={input.metascore} onChange={handleChange}/>
                 </div>
-                {/* <div>
-                    <label htmlFor='starts'></label>
-                    <input name='stars' id='stars' value={input.stars} onChange={handleChange}/>
-                </div> */}
                 <button>Update</button>
             </form>
         </div>
